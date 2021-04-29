@@ -3,7 +3,7 @@ import pygame
 
 class Capture(object):
     def __init__(self):
-        self.size = (640,480)
+        self.size = (640, 480)
         # create a display surface. standard pygame stuff
         self.display = pygame.display.set_mode(self.size, 0)
 
@@ -11,7 +11,7 @@ class Capture(object):
         self.clist = pygame.camera.list_cameras()
         if not self.clist:
             raise ValueError("Sorry, no cameras detected.")
-        self.cam = pygame.camera.Camera(self.clist[0], self.size)
+        self.cam = pygame.camera.Camera(self.clist[1], self.size)
         self.cam.start()
 
         # create a surface to capture to.  for performance purposes
@@ -26,7 +26,7 @@ class Capture(object):
             self.snapshot = self.cam.get_image(self.snapshot)
 
         # blit it to the display surface.  simple!
-        self.display.blit(self.snapshot, (0,0))
+        self.display.blit(self.snapshot, (0, 0))
         pygame.display.flip()
 
     def main(self):
