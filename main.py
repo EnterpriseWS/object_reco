@@ -1,6 +1,7 @@
 import pygame
 import pygame.camera
-from pygame.locals import *
+import video_capture as capture
+# from pygame.locals import *
 
 pygame.init()
 pygame.camera.init()
@@ -20,4 +21,5 @@ def get_cam_list():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    get_snapshot()
+    cap = capture.Capture()
+    cap.get_and_flip()
