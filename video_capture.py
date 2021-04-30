@@ -1,11 +1,17 @@
 import numpy as np
 import cv2
 import time
+import platform
+
+if platform.system() == 'Linux':
+    DEVICE_ID = '/dev/video1'
+elif platform.system() == 'Windows':
+    DEVICE_ID = 0
 
 
 class VideoCapture:
     def __init__(self):
-        self._vc = cv2.VideoCapture(0)
+        self._vc = cv2.VideoCapture(DEVICE_ID)
 
     def capture(self, fp=None, is_continuous=False, video_span=0, image_interval=0, max_size=0) -> None:
         while True:
