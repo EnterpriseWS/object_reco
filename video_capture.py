@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 import time
 import platform
 
@@ -23,7 +24,8 @@ class VideoCapture:
             time.sleep(1)
 
             # Display the resulting frame
-            cv2.imshow('frame', gray)
+            plt.imshow(gray)
+            plt.show()
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
