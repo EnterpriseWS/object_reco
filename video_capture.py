@@ -1,42 +1,27 @@
-import pygame
+import numpy as np
+import cv2
 
 
-class Capture(object):
+class VideoCapture:
     def __init__(self):
-        self.size = (640, 480)
-        # create a display surface. standard pygame stuff
-        self.display = pygame.display.set_mode(self.size, 0)
+        self._vc = cv2.VideoCapture(0)
 
-        # this is the same as what we saw before
-        self.clist = pygame.camera.list_cameras()
-        if not self.clist:
-            raise ValueError("Sorry, no cameras detected.")
-        self.cam = pygame.camera.Camera(self.clist[1], self.size)
-        self.cam.start()
+    def capture(self, fp=None, is_continuous=False, video_span=0, image_interval=0, max_size=0) -> None:
+        while True:
+            # Capture frame-by-frame
+            ret, frame = self._vc.read()
 
-        # create a surface to capture to.  for performance purposes
-        # bit depth is the same as that of the display surface.
-        self.snapshot = pygame.surface.Surface(self.size, 0, self.display)
+            # Our operations on the frame come here
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    def get_and_flip(self):
-        # if you don't want to tie the framerate to the camera, you can check
-        # if the camera has an image ready.  note that while this works
-        # on most cameras, some will never return true.
-        if self.cam.query_image():
-            self.snapshot = self.cam.get_image(self.snapshot)
+            # Display the resulting frame
+            cv2.imshow('frame', gray)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
 
-        # blit it to the display surface.  simple!
-        self.display.blit(self.snapshot, (0, 0))
-        pygame.display.flip()
+        # When everything done, release the capture
+        self._vc.release()
+        cv2.destroyAllWindows()
 
-    def main(self):
-        going = True
-        while going:
-            events = pygame.event.get()
-            for e in events:
-                if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
-                    # close the camera safely
-                    self.cam.stop()
-                    going = False
-
-            self.get_and_flip()
+    def display(self):
+        pass
