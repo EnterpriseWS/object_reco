@@ -14,7 +14,7 @@ class VideoCapture:
 
             # Our operations on the frame come here
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            time.sleep(1e-1)
+            time.sleep(1)
 
             # Display the resulting frame
             cv2.imshow('frame', gray)
