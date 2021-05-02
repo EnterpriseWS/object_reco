@@ -1,4 +1,3 @@
-import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import platform
@@ -13,7 +12,7 @@ FRAME_RATE = 30
 
 class ImageCapture:
     def __init__(self, device=DEVICE_ID, frame_rate=FRAME_RATE):
-        # TODO: Setup a config file to keep the constants below instead.
+        # TODO: Setup a config file to keep constants instead.
         self._vc = cv2.VideoCapture(device)
         self.camera_ready = False
         self._stop_capture = True
